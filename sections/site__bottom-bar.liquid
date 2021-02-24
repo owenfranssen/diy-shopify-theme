@@ -1,0 +1,32 @@
+{% comment %}
+** Bottom bar section
+
+- SF9 logo section - default
+- Payment icons - default
+- Copyright - default
+- Secure site icon
+- ...
+{% endcomment %}
+
+{% if section.settings.show_bottom-bars %}
+  <bottom-bar>
+    Bottom bar
+  </bottom-bar>
+{% endif %}
+
+
+{% schema %}
+  {
+    "name": "Bottom bar",
+    "class": "section__bottom-bar",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_bottom-bar",
+        "label": "Show bottom bar",
+        "default": true
+      }
+    ],
+    "blocks": []
+  }
+{% endschema %}

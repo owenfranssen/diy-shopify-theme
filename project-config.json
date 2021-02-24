@@ -1,0 +1,13 @@
+{
+  "custom": {
+    "source": "_src",
+    "scss": "_src/scss",
+    "js": "_src/js",
+    "svg": "_src/svg"
+  },
+  "output": {
+    "css": "assets/styles/",
+    "js": "assets/custom.js",
+    "svg": "snippets"
+  }
+}

@@ -1,0 +1,34 @@
+{% comment %}
+** Featured collection section
+
+{% endcomment %}
+
+<section>
+  {% if section.settings.title != blank %}
+    <h2 class="section__title">{{ section.settings.title }}</h2>
+  {% endif %}
+</section>
+
+{% schema %}
+  {
+    "name": "Featured collection",
+    "class": "section__featured-collection",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Featured collection"
+      }
+    ],
+    "blocks": [
+    ],
+    "presets": [
+      {
+        "name": "Featured collection",
+        "category": "Collection",
+        "settings": {}
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,34 @@
+{% comment %}
+** Slideshow with text dynamic section
+
+{% endcomment %}
+
+<section>
+  {% if section.settings.title != blank %}
+    <h2 class="section__title">{{ section.settings.title }}</h2>
+  {% endif %}
+</section>
+
+{% schema %}
+  {
+    "name": "Slideshow with text",
+    "class": "section__slideshow-with-text",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Title"
+      }
+    ],
+    "blocks": [
+    ],
+    "presets": [
+      {
+        "name": "Slideshow with text",
+        "category": "Image",
+        "settings": {}
+      }
+    ]
+  }
+{% endschema %}

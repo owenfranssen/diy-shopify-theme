@@ -1,0 +1,11 @@
+development:
+  password: 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
+  theme_id: "118683369628"
+  store: owen-sandbox.myshopify.com
+  ignores:
+  - themekit-ignore
+production:
+  theme_id: // Enter your theme id here
+  store: // Enter your store code here
+  ignores:
+  - themekit-ignore
