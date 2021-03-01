@@ -1,0 +1,17 @@
+.shopify-section {
+    width: 100%;
+
+    header,
+    footer,
+    section,
+    .section {
+        margin: 0 auto;
+        max-width: var(--site-width);
+        width: 100%;
+    }
+
+    .is--full-width {
+        max-width: none;
+        width: 100%;
+    }
+}

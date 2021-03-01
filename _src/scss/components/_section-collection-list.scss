@@ -1,0 +1,17 @@
+.section__collection-list {
+    .collection-list__item {
+        .item__wrap {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .item__thumbnail {
+            flex: 1;
+
+            .image-element__wrap {
+                height: 100%;
+            }
+        }
+    }
+}

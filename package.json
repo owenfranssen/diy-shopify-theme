@@ -36,6 +36,7 @@
     "gulp-replace": "^1.0.0",
     "gulp-sass": "^4.1.0",
     "gulp-scss-combine": "^1.0.0",
+    "gulp-sourcemaps": "^3.0.0",
     "gulp-stylelint": "^13.0.0",
     "gulp-svgo": "^2.2.1",
     "gulp-tap": "^2.0.0",

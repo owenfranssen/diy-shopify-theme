@@ -2,11 +2,92 @@
 ** Collection list dynamic section
 
 {% endcomment %}
+{%- capture css_classes -%}
+  collection-list__wrapper
+  {%- if section.settings.show_full_width -%},is--full-width {%- endif -%}
+  {%- if section.settings.css_class != blank -%},{{ section.settings.css_class }} {%- endif -%}
+{%- endcapture -%}
 
-<section>
+<section class="{{ css_classes | split: ',' | join: ' ' }}">
   {% if section.settings.title != blank %}
     <h2 class="section__title">{{ section.settings.title }}</h2>
   {% endif %}
+
+  {%- capture css_classes -%}
+    collection-list__items
+    {%- if section.settings.show_full_width -%},is--full-width{%- endif -%}
+    {%- if section.settings.collections_per_row > 1 -%},grid{%- endif -%}
+    {%- if section.settings.collections_per_row > 1 -%},grid-columns--{{ section.settings.collections_per_row }}{%- endif -%}
+    {%- if section.settings.collections_per_row < section.blocks.size -%},grid--has-rows{%- endif -%}
+  {%- endcapture -%}
+
+  <div class="{{ css_classes | split: ',' | join: ' ' }}">
+    {% if section.blocks.size > 0 %}
+      {% for block in section.blocks %}
+        {%- assign collection = collections[block.settings.feature_collection] -%}
+
+        {% if block.settings.image != blank %}
+          {%- assign collection_image = block.settings.image -%}
+          {%- assign collection_image_alt = block.settings.image.alt | escape -%}
+        {% elsif collection.image != blank %}
+          {%- assign collection_image = collection.image -%}
+          {%- assign collection_image_alt = collection.image.alt | escape -%}
+        {% else collection.empty? == false %}
+          {%- assign collection_image = collection.products.first.featured_image -%}
+          {%- assign collection_image_alt = collection.products.first.featured_image.alt | escape -%}
+        {% endif %}
+
+        <div class="collection-list__item">
+          <div class="item__wrap">
+            <div class="item__thumbnail__overlay"></div>
+
+            {% if collection_image != blank %}
+              <div class="item__thumbnail">
+                {% render 'include__image-element', image: collection_image.src, alt: collection_image_alt %}
+              </div>
+            {% else %}
+              {% capture num %}{% cycle "1", "2", "3", "4", "5", "6" %}{% endcapture %}
+              {{ 'collection-' | append: num | placeholder_svg_tag: 'placeholder-svg' }}
+            {% endif %}
+
+            <a class="item__caption" href="{{ collection.url }}">
+              {% if section.settings.collection_title_below_image == blank %}
+                <div class="item__caption-wrapper">
+                  {% if title != block.settings.preheading %}
+                    <span class="item__preheading">{{ block.settings.preheading }}</span>
+                  {% endif %}
+                  <span class="item__title">
+                    {% if title != blank %}
+                      {{ title }}
+                    {% elsif collection != blank %}
+                      {{ collection.title }}
+                    {% else %}
+                      {{ "homepage.onboarding.collection_title" | t }}
+                    {% endif %}
+                  </span>
+                  <a class="item__button button" href="{{ collection.url }}">{{ block.settings.button_label }}</a>
+                </div>
+              {% endif %}
+            </a>
+          </div>
+          {% if section.settings.collection_title_below_image != blank %}
+            <a class="item__caption item__caption--below-image" href="{{ collection.url }}">
+              <span class="item__title">
+                {% if title != blank %}
+                  {{ title }}
+                {% elsif collection != blank %}
+                  {{ collection.title }}
+                {% else %}
+                  {{ "homepage.onboarding.collection_title" | t }}
+                {% endif %}
+              </span>
+              <a class="item__button button" href="{{ collection.url }}">{{ block.settings.button_label }}</a>
+            </a>
+          {% endif %}
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
 </section>
 
 {% schema %}
@@ -19,6 +100,177 @@
         "id": "title",
         "label": "Heading",
         "default": "Title"
+      },
+      {
+        "type": "range",
+        "id": "collections_per_row",
+        "label": "Collections per row",
+        "min": 2,
+        "max": 5,
+        "step": 1,
+        "default": 3
+      },
+      {
+        "type": "select",
+        "id": "button_style",
+        "label": "Button style",
+        "default": "button--secondary",
+        "options": [
+          {
+            "value": "button--primary",
+            "label": "Primary"
+          },
+          {
+            "value": "button--secondary",
+            "label": "Secondary"
+          },
+          {
+            "value": "button--link-style",
+            "label": "Link"
+          }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Overlay"
+      },
+      {
+        "type": "color",
+        "id": "overlay_background",
+        "label": "Background",
+        "default": "#939393"
+      },
+      {
+        "type": "range",
+        "id": "overlay_background_opacity",
+        "label": "Background opacity",
+        "min": 0,
+        "max": 100,
+        "step": 10,
+        "default": 70,
+        "unit": "%"
+      },
+      {
+        "type": "color",
+        "id": "overlay_text",
+        "label": "Text",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "checkbox",
+        "id": "collection_title_below_image",
+        "label": "Show collection title below image",
+        "default": false
+      },
+      {
+        "type": "header",
+        "content": "Layout"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_full_width",
+        "label": "Show full width",
+        "default": true
+      },
+      {
+        "type": "color",
+        "id": "background_color",
+        "label": "Background color",
+        "default": "rgba(0,0,0,0)"
+      },
+      {
+        "type": "select",
+        "id": "animation",
+        "label": "Animation",
+        "default": "none",
+        "options": [
+          {
+            "value": "none",
+            "label": "None"
+          },
+          {
+            "value": "fadeIn",
+            "label": "Fade in"
+          },
+          {
+            "value": "fadeInDown",
+            "label": "Fade in down"
+          },
+          {
+            "value": "fadeInLeft",
+            "label": "Fade in left"
+          },
+          {
+            "value": "fadeInRight",
+            "label": "Fade in right"
+          },
+          {
+            "value": "slideInLeft",
+            "label": "Slide in left"
+          },
+          {
+            "value": "slideInRight",
+            "label": "Slide in right"
+          },
+          {
+            "value": "zoomIn",
+            "label": "Zoom in"
+          }
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "show_gutter",
+        "label": "Show gutter",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Mobile"
+      },
+      {
+        "type": "header",
+        "content": "Advanced"
+      },
+      {
+        "type": "text",
+        "id": "css_class",
+        "label": "CSS class"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "collection",
+        "name": "Collection",
+        "settings": [
+          {
+            "type": "collection",
+            "id": "feature_collection",
+            "label": "Collection"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image",
+            "info": "The collection's featured image will be used as a fallback."
+          },
+          {
+            "type": "text",
+            "id": "preheading",
+            "label": "Pre-heading"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading"
+          },
+          {
+            "type": "text",
+            "id": "button_label",
+            "label": "Button label",
+            "default": "View products"
+          }
+        ]
       }
     ],
     "presets": [
@@ -27,7 +279,18 @@
         "category": "Collection",
         "settings":{
           "title": "Collection list"
-        }
+        },
+        "blocks": [
+          {
+            "type": "collection"
+          },
+          {
+            "type": "collection"
+          },
+          {
+            "type": "collection"
+          }
+        ]
       }
     ]
   }

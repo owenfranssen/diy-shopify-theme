@@ -7,9 +7,15 @@
 - Wishlist, user login & cart options
 - Blocks
 - Search display options, mini, bar, overlay, popup
+
+*** Todo
+
+- Copy UI library block model
+- Use Flex settings as basis for blocks
+- Potentially have layout options (as per Flex) with blocks set in schema preset positions
 {% endcomment %}
 
-<header>
+<header{% if section.settings.show_full_width %} class="is--full-width"{% endif %}>
 
   {% for link in linklists.main-menu.links %}
     {% assign child_list_handle = link.title | handleize %}
@@ -37,11 +43,30 @@
 
 </header>
 
+<style>
+    :root {
+        --header-background-color: {{ section.settings.background_color }};
+    }
+</style>
+
 {% schema %}
   {
     "name": "Header",
     "class": "section__header",
-    "settings": [],
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_full_width",
+        "label": "Show full width",
+        "default": true
+      },
+      {
+        "type": "color",
+        "id": "background_color",
+        "label": "Background color",
+        "default": "rgba(0,0,0,0)"
+      }
+    ],
     "blocks": []
   }
 {% endschema %}

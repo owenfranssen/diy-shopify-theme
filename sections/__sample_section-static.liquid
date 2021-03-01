@@ -2,8 +2,13 @@
 ** Sample static section
 
 {% endcomment %}
+{%- capture css_classes -%}
+  section-name__wrapper
+  {%- if section.settings.show_full_width -%},is--full-width {%- endif -%}
+  {%- if section.settings.css_class != blank -%},{{ section.settings.css_class }} {%- endif -%}
+{%- endcapture -%}
 
-<section>
+<section class="{{ css_classes | split: ',' | join: ' ' }}">
   {% if section.settings.title != blank %}
     <h2 class="section__title">{{ section.settings.title }}</h2>
   {% endif %}
@@ -15,10 +20,31 @@
     "class": "section__name",
     "settings": [
       {
+        "type": "checkbox",
+        "id": "show_full_width",
+        "label": "Show full width",
+        "default": true
+      },
+      {
+        "type": "color",
+        "id": "background_color",
+        "label": "Background color",
+        "default": "rgba(0,0,0,0)"
+      },
+      {
         "type": "text",
         "id": "title",
         "label": "Heading",
         "default": "Title"
+      },
+      {
+        "type": "header",
+        "content": "Advanced"
+      },
+      {
+        "type": "text",
+        "id": "css_class",
+        "label": "CSS class"
       }
     ],
     "block": [],

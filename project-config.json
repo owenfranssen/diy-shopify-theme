@@ -6,7 +6,10 @@
     "svg": "_src/svg"
   },
   "output": {
-    "css": "assets/styles/",
+    "css": "_src/css"
+  },
+  "shopify": {
+    "css": "assets",
     "js": "assets/custom.js",
     "svg": "snippets"
   }

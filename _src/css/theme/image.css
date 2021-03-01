@@ -1,0 +1,7 @@
+.image-element__wrap img {
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  width: 100%;
+}
+/*# sourceMappingURL=../maps/theme/image.css.map */

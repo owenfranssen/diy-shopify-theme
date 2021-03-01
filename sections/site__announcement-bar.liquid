@@ -1,22 +1,22 @@
 {% comment %}
-** Top bar section
+** Announcement/USP bar section
 
 {% endcomment %}
 
-<section class="top-bar__wrapper{% if section.settings.show_full_width %} is--full-width{% endif %}">
-  Top bar
+<section class="announcement-bar__wrapper{% if section.settings.show_full_width %} is--full-width{% endif %}">
+  Announcement / USP bar
 </section>
 
 <style>
   :root {
-      --top-bar-background-color: {{ section.settings.background_color }};
+      --announcement-bar-background-color: {{ section.settings.background_color }};
   }
 </style>
 
 {% schema %}
   {
-    "name": "Top Bar",
-    "class": "section__top-bar",
+    "name": "Annnouncement Bar",
+    "class": "section__announcement-bar",
     "settings": [
       {
         "type": "checkbox",
@@ -29,15 +29,6 @@
         "id": "background_color",
         "label": "Background color",
         "default": "rgba(0,0,0,0)"
-      },
-      {
-        "type": "header",
-        "content": "Advanced"
-      },
-      {
-        "type": "text",
-        "id": "css_class",
-        "label": "CSS Class"
       }
     ],
     "blocks": []

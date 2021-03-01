@@ -14,7 +14,7 @@
   {{ content_for_header | replace: "<body onload='document._boomrl();'>", "<bodx onload='document._boomrl();'>" }}
 
   {% render 'css-variables' %}
-  {{ 'application.css' | asset_url | stylesheet_tag }}
+  {{ 'theme.css' | asset_url | stylesheet_tag }}
 
   {% if template.name == 'index' %}
     {% render 'include__index--schema-json' %}
@@ -22,16 +22,35 @@
 
 </head>
 <body>
-  {% section 'site__top-bar' %}
-  {% section 'site__header' %}
+  {% if settings.show_top_bar %}
+    {% section 'site__top-bar' %}
+  {% endif %}
+
+  {%- if settings.header_layout == "classic" -%}
+    {% section 'site__header_classic' %}
+  {%- elsif settings.header_layout == "centered" -%}
+    {% section 'site__header_centered' %}
+  {%- elsif settings.header_layout == "search_focus" -%}
+    {% section 'site__header_search-focus' %}
+  {%- endif -%}
+
+  {% if settings.show_announcement_bar %}
+    {% section 'site__announcement-bar' %}
+  {% endif %}
 
   <main role="main">
     {{ content_for_layout }}
   </main>
 
-  {% section 'site__newsletter' %}
+  {% if settings.show_newsletter %}
+    {% section 'site__newsletter' %}
+  {% endif %}
+
   {% section 'site__footer' %}
-  {% section 'site__bottom-bar' %}
+
+  {% if settings.show_bottom_bar %}
+    {% section 'site__bottom-bar' %}
+  {% endif %}
 
   {{ 'application.js' | asset_url | script_tag }}
 </body>

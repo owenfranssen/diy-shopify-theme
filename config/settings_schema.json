@@ -1,10 +1,152 @@
 [
   {
     "name": "theme_info",
-    "theme_name": "Themekit template theme",
-    "theme_version": "1.0.0",
-    "theme_author": "Shopify",
+    "theme_name": "SF9 Shopify",
+    "theme_version": "0.0.1",
+    "theme_author": "StudioForty9",
     "theme_documentation_url": "https://github.com/Shopify/themekit",
     "theme_support_url": "https://github.com/Shopify/themekit/issues"
+  },
+  {
+    "name": "Layout",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_top_bar",
+        "label": "Show top bar",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_announcement_bar",
+        "label": "Show static announcement bar",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_newsletter",
+        "label": "Show static newsletter",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_bottom_bar",
+        "label": "Show bottom bar",
+        "default": true
+      },
+      {
+        "type": "select",
+        "id": "header_layout",
+        "label": "Header",
+        "info": "[Preview options](https:\/\/help.outofthesandbox.com\/hc\/en-us\/articles\/360022225073#header-settings-and-styles)",
+        "options": [
+          {
+            "value": "centered",
+            "label": "Centered"
+          },
+          {
+            "value": "classic",
+            "label": "Classic"
+          },
+          {
+            "value": "search_focus",
+            "label": "Search focus"
+          }
+        ],
+        "default": "classic"
+      },
+      {
+        "type": "select",
+        "id": "footer_layout",
+        "label": "Footer",
+        "info": "[Preview options](https:\/\/help.outofthesandbox.com\/hc\/en-us\/articles\/360021506133#footer-styles)",
+        "options": [
+          {
+            "value": "centered",
+            "label": "Centered"
+          },
+          {
+            "value": "classic",
+            "label": "Classic"
+          },
+          {
+            "value": "promotional",
+            "label": "Promotional"
+          }
+        ],
+        "default": "classic"
+      }
+    ]
+  },
+  {
+    "name": "Colours",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Theme colours"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Headings"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_family_heading",
+        "label": "Font",
+        "default": "poppins_n6"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_heading_custom_font",
+        "label": "Use custom font",
+        "default": false
+      },
+      {
+        "type": "text",
+        "id": "heading_custom_font",
+        "label": "Custom font",
+        "placeholder": "e.g. 'Font Name', Arial, sans-serif"
+      },
+      {
+        "type": "header",
+        "content": "Body text"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_family_regular",
+        "label": "Font",
+        "default": "open_sans_n4"
+      },
+      {
+        "type": "range",
+        "id": "regular_font_size",
+        "label": "Base size",
+        "min": 12,
+        "max": 20,
+        "default": 16,
+        "unit": "px"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_regular_custom_font",
+        "label": "Use custom font",
+        "default": false
+      },
+      {
+        "type": "text",
+        "id": "regular_custom_font",
+        "label": "Custom font",
+        "placeholder": "e.g. 'Font Name', Arial, sans-serif"
+      },
+      {
+        "type": "paragraph",
+        "content": "To use a custom font, set the font and font fallback in CSS style in the appropriate text box. Ensure that the font you wish to use has a matching @font-face declaration in your theme stylesheet."
+      }
+    ]
   }
 ]
