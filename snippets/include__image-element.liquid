@@ -1,0 +1,53 @@
+{% comment %}
+Required values
+image: <image object>
+alt: <image alt property>
+______________
+Optional values
+progressive: <boolean>
+additional_classes: <string>
+{% endcomment %}
+
+{% comment %}Check if image is progressive (does not support transparent pngs){% endcomment %}
+{% if progressive %}
+  {%- capture srcset -%}
+    {{ image | img_url: '2000x', format: 'pjpg' }} 2000w,
+    {{ image | img_url: '1800x', format: 'pjpg' }} 1800w,
+    {{ image | img_url: '1600x', format: 'pjpg' }} 1600w,
+    {{ image | img_url: '1400x', format: 'pjpg' }} 1400w,
+    {{ image | img_url: '1200x', format: 'pjpg' }} 1200w,
+    {{ image | img_url: '1000x', format: 'pjpg' }} 1000w,
+    {{ image | img_url: '800x', format: 'pjpg' }} 800w,
+    {{ image | img_url: '600x', format: 'pjpg' }} 600w,
+    {{ image | img_url: '400x', format: 'pjpg' }} 400w,
+    {{ image | img_url: '200x', format: 'pjpg' }} 200w
+  {%- endcapture -%}
+{% else %}
+  {%- capture srcset -%}
+    {{ image | img_url: '2000x' }} 2000w,
+    {{ image | img_url: '1800x' }} 1800w,
+    {{ image | img_url: '1600x' }} 1600w,
+    {{ image | img_url: '1400x' }} 1400w,
+    {{ image | img_url: '1200x' }} 1200w,
+    {{ image | img_url: '1000x' }} 1000w,
+    {{ image | img_url: '800x' }} 800w,
+    {{ image | img_url: '600x' }} 600w,
+    {{ image | img_url: '400x' }} 400w,
+    {{ image | img_url: '200x' }} 200w,
+  {%- endcapture -%}
+{% endif %}
+
+{% assign low_quality_image = image | img_url: '50x' %}
+
+<div class="image-element__wrap">
+  <img alt="{{ alt | escape }}"
+        class="{{ additional_classes }}"
+        src="{{ low_quality_image }}"
+        height="{{ image.height }}"
+        width="{{ image.width }}"
+        srcset="{{ srcset }}"
+        sizes="(min-width: 10000px) 33vw,
+               (min-width: 768px) 50vw,
+               96vw"
+  />
+</div>
