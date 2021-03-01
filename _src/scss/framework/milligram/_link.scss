@@ -1,0 +1,12 @@
+// Link
+// ––––––––––––––––––––––––––––––––––––––––––––––––––
+
+a {
+    color: var(--c-primary, #0080c0);
+    text-decoration: none;
+
+    &:focus,
+    &:hover {
+        color: var(--c-primary-variant, #01679b);
+    }
+}

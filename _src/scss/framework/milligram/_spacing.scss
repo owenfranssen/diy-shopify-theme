@@ -1,0 +1,29 @@
+// Spacing
+// ––––––––––––––––––––––––––––––––––––––––––––––––––
+
+.button,
+button,
+dd,
+dt,
+li {
+    margin-bottom: var(--spacer-m, 1.25rem);
+}
+
+fieldset,
+input,
+select,
+textarea {
+    margin-bottom: var(--spacer-base, 1.5rem);
+}
+
+blockquote,
+dl,
+figure,
+form,
+ol,
+p,
+pre,
+table,
+ul {
+    margin-bottom: var(--spacer-xl, 2.5rem);
+}
