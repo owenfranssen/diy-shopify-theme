@@ -50,9 +50,9 @@
               {{ 'collection-' | append: num | placeholder_svg_tag: 'placeholder-svg' }}
             {% endif %}
 
-            <a class="item__caption" href="{{ collection.url }}">
-              {% if section.settings.collection_title_below_image == blank %}
-                <div class="item__caption-wrapper">
+            {% capture item_caption %}
+              <div class="item__caption-wrapper">
+                <a class="item__caption" href="{{ collection.url }}">
                   {% if title != block.settings.preheading %}
                     <span class="item__preheading">{{ block.settings.preheading }}</span>
                   {% endif %}
@@ -66,23 +66,16 @@
                     {% endif %}
                   </span>
                   <a class="item__button button" href="{{ collection.url }}">{{ block.settings.button_label }}</a>
-                </div>
-              {% endif %}
-            </a>
+                </a>
+              </div>
+            {% endcapture %}
+
+            {% if section.settings.collection_title_below_image == blank %}
+              {{ item_caption }}
+            {% endif %}
           </div>
           {% if section.settings.collection_title_below_image != blank %}
-            <a class="item__caption item__caption--below-image" href="{{ collection.url }}">
-              <span class="item__title">
-                {% if title != blank %}
-                  {{ title }}
-                {% elsif collection != blank %}
-                  {{ collection.title }}
-                {% else %}
-                  {{ "homepage.onboarding.collection_title" | t }}
-                {% endif %}
-              </span>
-              <a class="item__button button" href="{{ collection.url }}">{{ block.settings.button_label }}</a>
-            </a>
+            {{ item_caption }}
           {% endif %}
         </div>
       {% endfor %}
