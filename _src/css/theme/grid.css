@@ -1,0 +1,20 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(autofit, minmax(320px, 1fr));
+}
+.grid.grid--has-rows.grid-columns--2 {
+  grid-template-columns: repeat(2, minmax(320px, 1fr));
+}
+.grid.grid--has-rows.grid-columns--3 {
+  grid-template-columns: repeat(3, minmax(320px, 1fr));
+}
+.grid.grid--has-rows.grid-columns--4 {
+  grid-template-columns: repeat(4, minmax(320px, 1fr));
+}
+.grid.grid--has-rows.grid-columns--5 {
+  grid-template-columns: repeat(5, minmax(320px, 1fr));
+}
+.grid.grid--has-rows.grid-columns--6 {
+  grid-template-columns: repeat(6, minmax(320px, 1fr));
+}
+/*# sourceMappingURL=../maps/theme/grid.css.map */
