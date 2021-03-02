@@ -2,15 +2,22 @@
 ** Sample dynamic section
 
 {% endcomment %}
+
+{% if type == 'block' %}
+{%- assign object = block -%}
+{% else %}
+{%- assign object = section -%}
+{% endif %}
+
 {%- capture css_classes -%}
   section-name__wrapper
-  {%- if section.settings.show_full_width -%},is--full-width {%- endif -%}
-  {%- if section.settings.css_class != blank -%},{{ section.settings.css_class }} {%- endif -%}
+  {%- if object.settings.show_full_width -%},is--full-width {%- endif -%}
+  {%- if object.settings.css_class != blank -%},{{ object.settings.css_class }} {%- endif -%}
 {%- endcapture -%}
 
 <section class="{{ css_classes | split: ',' | join: ' ' }}">
-  {% if section.settings.title != blank %}
-    <h2 class="section__title">{{ section.settings.title }}</h2>
+  {% if object.settings.title != blank %}
+    <h2 class="section__title">{{ object.settings.title }}</h2>
   {% endif %}
 </section>
 

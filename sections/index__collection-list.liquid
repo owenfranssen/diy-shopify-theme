@@ -37,7 +37,7 @@
           {%- assign collection_image_alt = collection.products.first.featured_image.alt | escape -%}
         {% endif %}
 
-        <div class="collection-list__item">
+        <div class="collection-list__item" {{ block.shopify_attributes }}>
           <div class="item__wrap">
             <div class="item__thumbnail__overlay"></div>
 

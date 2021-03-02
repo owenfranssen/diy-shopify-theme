@@ -3,10 +3,87 @@
 
 {% endcomment %}
 
-<section>
-  {% if section.settings.title != blank %}
-    <h2 class="section__title">{{ section.settings.title }}</h2>
+{% if type == 'block' %}
+  {%- assign object = block -%}
+{% else %}
+  {%- assign object = section -%}
+{% endif %}
+
+{%- assign collection = collections[object.settings.collection] -%}
+
+{% if collection != blank and collection.products != blank %}
+  {%- assign section_onboarding = false -%}
+{% else %}
+  {%- assign section_onboarding = true -%}
+{% endif %}
+
+{%- capture css_classes -%}
+  section-name__wrapper
+  {%- if object.settings.show_full_width -%},is--full-width {%- endif -%}
+  {%- if object.settings.css_class != blank -%},{{ object.settings.css_class }} {%- endif -%}
+{%- endcapture -%}
+
+<section class="{{ css_classes | split: ',' | join: ' ' }}">
+  {% if object.settings.title != blank %}
+    <h2 class="section__title">{{ object.settings.title }}</h2>
   {% endif %}
+
+  {%- capture css_classes -%}
+    product-list
+    {%- if object.settings.products_per_row > 1 -%},grid{%- endif -%}
+    {%- if object.settings.products_per_row > 1 -%},grid-columns--{{ object.settings.products_per_row }}{%- endif -%}
+    {%- if object.settings.products_per_row < object.settings.products_limit -%},grid--has-rows{%- endif -%}
+  {%- endcapture -%}
+
+  <div class="{{ css_classes | split: ',' | join: ' ' }}">
+    {% if section_onboarding == false %}
+      {% if layout == 'slider' %}
+        {% if collection.all_products_count > 0 %}
+          {% render 'include__product-slider',
+                  limit: object.settings.products_limit,
+                  products: collection.products,
+                  skip_product: product,
+                  per_slide: object.settings.products_per,
+                  mobile_products_per_row: object.settings.mobile_products_per_row,
+                  align_height: object.settings.align_height,
+                  height: object.settings.height,
+                  show_gutter: object.settings.show_gutter,
+                  featured_collection: object.settings.collection
+          %}
+        {% endif %}
+
+      {% else %}
+        {% if collection.all_products_count > 0 %}
+          {% render 'include__product-loop',
+                  limit: object.settings.products_limit,
+                  products: collection.products,
+                  skip_product: product,
+                  products_per_row: object.settings.products_per,
+                  mobile_products_per_row: object.settings.mobile_products_per_row,
+                  align_height: object.settings.align_height,
+                  height: object.settings.collection_height
+          %}
+        {% endif %}
+      {% endif %}
+
+    {% else %}
+      {% comment %} Placeholder images {% endcomment %}
+      {% for i in (1..10) %}
+        <div class="collection__item
+          	one-fifth
+            {% if object.settings.mobile_products_per_row == '1' %}
+              small-down--one-whole
+            {% else %}
+              small-down--one-half
+            {% endif %}
+            thumbnail column">
+          {% capture num %}{% cycle "1", "2", "3", "4", "5", "6" %}{% endcapture %}
+          {{ 'product-' | append: num | placeholder_svg_tag: 'placeholder-svg placeholder-svg--product' }}
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+
 </section>
 
 {% schema %}
@@ -18,7 +95,149 @@
         "type": "text",
         "id": "title",
         "label": "Heading",
-        "default": "Featured collection"
+        "default": "Title"
+      },
+      {
+        "type": "collection",
+        "id": "collection",
+        "label": "Collection"
+      },
+      {
+        "type": "header",
+        "content": "Products"
+      },
+      {
+        "type": "range",
+        "id": "products_per_row",
+        "label": "Products per row",
+        "min": 2,
+        "max": 7,
+        "default": 5
+      },
+      {
+        "type": "select",
+        "id": "mobile_products_per_row",
+        "label": "Products per row on mobile",
+        "info": "Applied only when 'Collection layout' is set to 'Grid'.",
+        "options": [
+          {
+            "value": "1",
+            "label": "1"
+          },
+          {
+            "value": "2",
+            "label": "2"
+          }
+        ],
+        "default": "1"
+      },
+      {
+        "type": "range",
+        "id": "products_limit",
+        "label": "Limit products",
+        "min": 3,
+        "max": 50,
+        "default": 10
+      },
+      {
+        "type": "checkbox",
+        "id": "align_height",
+        "label": "Align to height"
+      },
+      {
+        "type": "range",
+        "id": "collection_height",
+        "label": "Product image height",
+        "min": 150,
+        "max": 400,
+        "step": 10,
+        "default": 200,
+        "unit": "px",
+        "info": "Applied when 'Align to height' is enabled. [Learn more](https://help.outofthesandbox.com/hc/en-us/articles/360022543913)"
+      },
+      {
+        "type": "header",
+        "content": "Layout"
+      },
+      {
+        "type": "radio",
+        "id": "collection_style",
+        "label": "Collection layout",
+        "default": "grid",
+        "options": [
+          {
+            "value": "grid",
+            "label": "Grid"
+          },
+          {
+            "value": "slider",
+            "label": "Slider"
+          }
+        ],
+        "default": "grid"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_gutter",
+        "label": "Show gutter",
+        "default": true
+      },
+      {
+        "type": "select",
+        "id": "animation",
+        "label": "Animation",
+        "default": "none",
+        "options": [
+          {
+            "value": "none",
+            "label": "None"
+          },
+          {
+            "value": "fadeIn",
+            "label": "Fade in"
+          },
+          {
+            "value": "fadeInDown",
+            "label": "Fade in down"
+          },
+          {
+            "value": "fadeInLeft",
+            "label": "Fade in left"
+          },
+          {
+            "value": "fadeInRight",
+            "label": "Fade in right"
+          },
+          {
+            "value": "slideInLeft",
+            "label": "Slide in left"
+          },
+          {
+            "value": "slideInRight",
+            "label": "Slide in right"
+          }
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "show_full_width",
+        "label": "Show full width",
+        "default": true
+      },
+      {
+        "type": "color",
+        "id": "background_color",
+        "label": "Background color",
+        "default": "rgba(0,0,0,0)"
+      },
+      {
+        "type": "header",
+        "content": "Advanced"
+      },
+      {
+        "type": "text",
+        "id": "css_class",
+        "label": "CSS class"
       }
     ],
     "blocks": [
