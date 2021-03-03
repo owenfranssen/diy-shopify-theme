@@ -57,11 +57,7 @@
           {% render 'include__product-loop',
                   limit: object.settings.products_limit,
                   products: collection.products,
-                  skip_product: product,
-                  products_per_row: object.settings.products_per,
-                  mobile_products_per_row: object.settings.mobile_products_per_row,
-                  align_height: object.settings.align_height,
-                  height: object.settings.collection_height
+                  skip_product: product
           %}
         {% endif %}
       {% endif %}
@@ -69,21 +65,13 @@
     {% else %}
       {% comment %} Placeholder images {% endcomment %}
       {% for i in (1..10) %}
-        <div class="collection__item
-          	one-fifth
-            {% if object.settings.mobile_products_per_row == '1' %}
-              small-down--one-whole
-            {% else %}
-              small-down--one-half
-            {% endif %}
-            thumbnail column">
+        <div class="product-card">
           {% capture num %}{% cycle "1", "2", "3", "4", "5", "6" %}{% endcapture %}
           {{ 'product-' | append: num | placeholder_svg_tag: 'placeholder-svg placeholder-svg--product' }}
         </div>
       {% endfor %}
     {% endif %}
   </div>
-
 </section>
 
 {% schema %}
@@ -138,22 +126,6 @@
         "min": 3,
         "max": 50,
         "default": 10
-      },
-      {
-        "type": "checkbox",
-        "id": "align_height",
-        "label": "Align to height"
-      },
-      {
-        "type": "range",
-        "id": "collection_height",
-        "label": "Product image height",
-        "min": 150,
-        "max": 400,
-        "step": 10,
-        "default": 200,
-        "unit": "px",
-        "info": "Applied when 'Align to height' is enabled. [Learn more](https://help.outofthesandbox.com/hc/en-us/articles/360022543913)"
       },
       {
         "type": "header",
