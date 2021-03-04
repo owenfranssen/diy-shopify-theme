@@ -1,0 +1,36 @@
+<h1>{{ page.title }}</h1>
+<div>{{ page.content }}</div>
+
+{% comment %} Pages {% endcomment %}
+<div class="parent-container">
+  <h2>Pages:</h2>
+  <div class="link-container">
+    {% for link in linklists.sitemap-menu.links %}
+    <a class="sitemap_link" href="{{ link.url }}">{{ link.title }}  </a>
+    {% endfor %}
+  </div>
+</div>
+
+{% comment %} Collections {% endcomment %}
+<div class="parent-container">
+  <h2>Collections:</h2>
+  <div class="link-container">
+    {% for product in collections %}
+    {% if product.handle != 'all-products' %}
+    <a class="sitemap_link" href="{{ product.url | within: collection }}">{{ product.title }}</a>&nbsp;
+    {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+{% comment %} Products {% endcomment %}
+<div class="parent-container">
+  <h2>Products:</h2>
+  <div class="link-container">
+    {% if collections.all-products.products.size > 0 %}
+    {% for product in collections.all-products.products %}
+    <a class="sitemap_link" href="{{ product.url }}">{{ product.title | escape  }}</a>
+    {% endfor %}
+    {% endif %}
+  </div>
+</div>
